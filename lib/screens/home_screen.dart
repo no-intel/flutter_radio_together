@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
+import 'package:radio_together/widgets/home/join_widget.dart';
 import 'package:radio_together/widgets/home/login_widget.dart';
 import 'package:radio_together/widgets/home/title_widget.dart';
 
@@ -27,15 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const BackgroundWidget(),
           isLogin
-              ? const Center(
-                  child: Text(
-                    "로그인 성공!",
-                    style: TextStyle(fontSize: 30, color: Colors.white),
-                  ),
-                )
+              ? Column(children: [TitleWidget(), JoinWidget()])
               : Column(
                   children: [
-                    const TitleWidget(),
+                    TitleWidget(),
                     LoginWidget(doLogin: _handleLogin),
                   ],
                 ),
