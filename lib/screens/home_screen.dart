@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:radio_together/widgets/pulsingbar_widget.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
