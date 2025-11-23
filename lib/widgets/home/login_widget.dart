@@ -2,33 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 
 class LoginWidget extends StatelessWidget {
-  const LoginWidget({super.key});
+  final VoidCallback doLogin;
+
+  const LoginWidget({super.key, required this.doLogin});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: 3,
       child: Container(
-        // decoration: BoxDecoration(color: Colors.blue),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white, // 배경은 흰색
-                foregroundColor: Colors.black, // 글자는 검은색
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
                 minimumSize: const Size(250, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              onPressed: () {
-                // TODO: 구글 로그인 기능 구현
-              },
+              onPressed: doLogin,
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Icon(Icons.g_mobiledata), // <- 나중에 여기에 구글 로고 이미지 추가
                   SizedBox(width: 8),
                   Text(
                     'Sign in with Google',
@@ -38,23 +36,20 @@ class LoginWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // 애플 로그인 버튼
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black, // 배경은 검은색
-                foregroundColor: Colors.white, // 글자는 흰색
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 minimumSize: const Size(250, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              onPressed: () {
-                // TODO: 애플 로그인 기능 구현
-              },
+              // 2. 버튼이 눌리면 부모에게서 받은 함수를 실행합니다.
+              onPressed: doLogin,
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Icon(Icons.apple), // <- 나중에 여기에 애플 로고 이미지 추가
                   SizedBox(width: 8),
                   Text(
                     'Sign in with Apple',
@@ -63,7 +58,7 @@ class LoginWidget extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             SizedBox(height: 50, child: const PulsingBarWidget()),
           ],
         ),
