@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:radio_together/widgets/pulsingbar_widget.dart';
+import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
