@@ -59,7 +59,10 @@ class LoginWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            SizedBox(height: 50, child: const PulsingBarWidget()),
+            Hero(
+              tag: 'pulse',
+              child: SizedBox(height: 50, child: const PulsingBarWidget()),
+            ),
           ],
         ),
       ),

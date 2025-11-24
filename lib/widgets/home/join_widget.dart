@@ -82,8 +82,10 @@ class JoinWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16), // 남은 공간을 모두 차지하는 스페이서
-            SizedBox(height: 50, child: const PulsingBarWidget()),
-            const SizedBox(height: 24),
+            Hero(
+              tag: 'pulse',
+              child: SizedBox(height: 50, child: const PulsingBarWidget()),
+            ),
           ],
         ),
       ),

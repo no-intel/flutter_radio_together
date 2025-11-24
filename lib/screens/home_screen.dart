@@ -4,6 +4,7 @@ import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
 import 'package:radio_together/widgets/home/join_widget.dart';
 import 'package:radio_together/widgets/home/login_widget.dart';
+import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 import 'package:radio_together/widgets/home/title_widget.dart';
 
 import '../main.dart';
@@ -47,14 +48,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Stack(
         children: [
           const BackgroundWidget(),
-          isLogin
-              ? const Column(children: [TitleWidget(), JoinWidget()])
-              : Column(
-                  children: [
-                    const TitleWidget(),
-                    LoginWidget(doLogin: _handleLogin),
-                  ],
-                ),
+          FutureBuilder(
+            future: ref.read(getPositionServiceProvider).getMyPosition(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: Hero(
+                    tag: 'pulse',
+                    child: SizedBox(
+                      height: 50,
+                      child: const PulsingBarWidget(),
+                    ),
+                  ),
+                );
+              }
+              return isLogin
+                  ? const Column(children: [TitleWidget(), JoinWidget()])
+                  : Column(
+                      children: [
+                        const TitleWidget(),
+                        LoginWidget(doLogin: _handleLogin),
+                      ],
+                    );
+            },
+          ),
         ],
       ),
     );
