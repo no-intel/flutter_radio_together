@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/screens/create_room_screen.dart';
 import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 
 class JoinWidget extends StatelessWidget {
@@ -57,7 +58,24 @@ class JoinWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      CreateRoomScreen(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        final tween = Tween(begin: begin, end: end);
+                        final offsetAnimation = animation.drive(tween);
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                ),
+              ),
               child: const Text(
                 '방 만들기',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
