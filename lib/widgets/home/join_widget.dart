@@ -63,7 +63,7 @@ class JoinWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
-            const Spacer(), // 남은 공간을 모두 차지하는 스페이서
+            SizedBox(height: 16), // 남은 공간을 모두 차지하는 스페이서
             SizedBox(height: 50, child: const PulsingBarWidget()),
             const SizedBox(height: 24),
           ],
