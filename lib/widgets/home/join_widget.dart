@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/screens/create_room_screen.dart';
 import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 
 class JoinWidget extends StatelessWidget {
-  const JoinWidget({super.key});
+  final MyPosition myPosition;
+
+  const JoinWidget({super.key, required this.myPosition});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,7 @@ class JoinWidget extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      CreateRoomScreen(),
+                      CreateRoomScreen(myPosition: myPosition),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                         const begin = Offset(1.0, 0.0);

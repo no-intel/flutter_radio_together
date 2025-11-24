@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/widgets/home/pulsingbar_widget.dart';
 
 class LoginWidget extends StatelessWidget {
   final VoidCallback doLogin;
+  final MyPosition myPosition;
 
-  const LoginWidget({super.key, required this.doLogin});
+  const LoginWidget({
+    super.key,
+    required this.doLogin,
+    required this.myPosition,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -63,11 +63,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 );
               }
               return isLogin
-                  ? const Column(children: [TitleWidget(), JoinWidget()])
+                  ? Column(
+                      children: [
+                        const TitleWidget(),
+                        JoinWidget(myPosition: myPosition),
+                      ],
+                    )
                   : Column(
                       children: [
                         const TitleWidget(),
-                        LoginWidget(doLogin: _handleLogin),
+                        LoginWidget(
+                          doLogin: _handleLogin,
+                          myPosition: myPosition,
+                        ),
                       ],
                     );
             },
