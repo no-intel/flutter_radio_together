@@ -53,12 +53,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Stack(
         children: [
           BackgroundWidget(),
-          isLogin
-              ? JoinWidget(myPosition: myPosition!)
-              : LoginButtonWidget(
-                  onPressed: _handleLogin,
-                  myPosition: myPosition,
-                ),
+          SafeArea(
+            child: isLogin
+                ? JoinWidget(myPosition: myPosition!)
+                : LoginButtonWidget(
+                    onPressed: _handleLogin,
+                    myPosition: myPosition,
+                  ),
+          ),
         ],
       ),
     );
