@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   geolocator: ^14.0.2
   flutter_dotenv: ^6.0.0
+  http: ^1.6.0
 
 
 dev_dependencies:
