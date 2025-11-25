@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:radio_together/main.dart';
 import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
+import 'package:radio_together/widgets/home/join_widget.dart';
 import 'package:radio_together/widgets/home/logins/login_button_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -52,7 +53,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Stack(
         children: [
           BackgroundWidget(),
-          LoginButtonWidget(onPressed: _handleLogin, myPosition: myPosition),
+          isLogin
+              ? JoinWidget(myPosition: myPosition!)
+              : LoginButtonWidget(
+                  onPressed: _handleLogin,
+                  myPosition: myPosition,
+                ),
         ],
       ),
     );
