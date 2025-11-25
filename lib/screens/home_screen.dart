@@ -35,6 +35,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         });
       }
     } catch (e) {
+      throw Error();
       print("위치 정보 가져오기 실패: $e");
     }
   }
