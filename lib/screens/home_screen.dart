@@ -40,47 +40,58 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('build@@@@');
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromRGBO(136, 157, 159, 1),
-      body: Stack(
-        children: [
-          const BackgroundWidget(),
-          FutureBuilder(
-            future: ref.read(getPositionServiceProvider).getMyPosition(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: Hero(
-                    tag: 'pulse',
-                    child: SizedBox(
-                      height: 50,
-                      child: const PulsingBarWidget(),
-                    ),
-                  ),
-                );
-              }
-              return isLogin
-                  ? Column(
-                      children: [
-                        const TitleWidget(),
-                        JoinWidget(myPosition: myPosition),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        const TitleWidget(),
-                        LoginWidget(
-                          doLogin: _handleLogin,
-                          myPosition: myPosition,
-                        ),
-                      ],
-                    );
-            },
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF9333EA), // purple-600
+              Color(0xFF4F46E5), // indigo-600
+              Color(0xFF2563EB), // blue-600
+            ],
+            stops: [0.0, 0.5, 1.0],
           ),
-        ],
+        ),
+        child: Stack(
+          children: [
+            const BackgroundWidget(),
+            FutureBuilder(
+              future: ref.read(getPositionServiceProvider).getMyPosition(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: Hero(
+                      tag: 'pulse',
+                      child: SizedBox(
+                        height: 50,
+                        child: const PulsingBarWidget(),
+                      ),
+                    ),
+                  );
+                }
+                return isLogin
+                    ? Column(
+                        children: [
+                          const TitleWidget(),
+                          JoinWidget(myPosition: myPosition),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          const TitleWidget(),
+                          LoginWidget(
+                            doLogin: _handleLogin,
+                            myPosition: myPosition,
+                          ),
+                        ],
+                      );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

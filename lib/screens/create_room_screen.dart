@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/model/my_position.dart';
 
-class CreateRoomScreen extends StatefulWidget {
-  const CreateRoomScreen({super.key});
+class CreateRoomScreen extends StatelessWidget {
+  final MyPosition myPosition;
 
-  @override
-  State<CreateRoomScreen> createState() => _CreateRoomScreenState();
-}
+  const CreateRoomScreen({super.key, required this.myPosition});
 
-class _CreateRoomScreenState extends State<CreateRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('방 만들기')),
-      body: ListView(children: [Text("1"), Text("2"), Text("3")]),
+      body: Center(),
     );
   }
 }
