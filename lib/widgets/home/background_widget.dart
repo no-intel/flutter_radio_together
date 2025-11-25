@@ -5,11 +5,19 @@ class BackgroundWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Image.asset('assets/images/radio-main.png', fit: BoxFit.cover),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF9333EA), // purple-600
+            Color(0xFF4F46E5), // indigo-600
+            Color(0xFF2563EB), // blue-600
+          ],
+          stops: [0.0, 0.5, 1.0],
+        ),
+      ),
     );
   }
 }
