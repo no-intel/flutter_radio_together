@@ -1,13 +1,8 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../model/my_position.dart';
 
 class GetPositionService {
-  final getPositionServiceProvider = Provider<GetPositionService>((ref) {
-    return GetPositionService();
-  });
-
   Future<MyPosition> getMyPosition() async {
     // 위치 서비스가 활성화되어 있는지 확인합니다.
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();

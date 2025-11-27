@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:radio_together/model/my_position.dart';
+import 'package:radio_together/model/radio_item_model.dart';
+import 'package:radio_together/services/create/get_radio_item.dart';
 import 'package:radio_together/widgets/create/radio_item_widget.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
 
-class CreateRoomScreen extends StatelessWidget {
+class CreateRoomScreen extends StatefulWidget {
   final MyPosition myPosition;
 
   const CreateRoomScreen({super.key, required this.myPosition});
+
+  @override
+  State<CreateRoomScreen> createState() => _CreateRoomScreenState();
+}
+
+class _CreateRoomScreenState extends State<CreateRoomScreen> {
+  late Future<List<RadioItemModel>> radioItems;
+
+  @override
+  void initState() {
+    super.initState();
+    radioItems = GetRadioItemsService().getRadioItems(widget.myPosition);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +48,7 @@ class CreateRoomScreen extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(color: Colors.white),
                 child: FutureBuilder(
-                  future: ,
+                  future: radioItems,
                   builder: (context, snapshot) => ListView(
                     padding: const EdgeInsets.only(top: 16, bottom: 16),
                     children: const [

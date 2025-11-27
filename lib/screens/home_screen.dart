@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:radio_together/main.dart';
+import 'package:radio_together/di.dart';
 import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
 import 'package:radio_together/widgets/home/join_widget.dart';
