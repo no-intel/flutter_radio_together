@@ -8,7 +8,6 @@ class RadioListItem extends StatelessWidget {
     required this.listeners,
     required this.iconColor,
     required this.playButtonColor,
-    this.isLive = false,
   });
 
   final String title;
@@ -16,7 +15,6 @@ class RadioListItem extends StatelessWidget {
   final String listeners;
   final Color iconColor;
   final Color playButtonColor;
-  final bool isLive;
 
   @override
   Widget build(BuildContext context) {
@@ -66,26 +64,6 @@ class RadioListItem extends StatelessWidget {
                         color: Colors.black87,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    if (isLive)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade400,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const Text(
-                          'LIVE',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                   ],
                 ),
                 const SizedBox(height: 4),

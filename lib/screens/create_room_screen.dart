@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:radio_together/di.dart';
 import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/model/radio_item_model.dart';
-import 'package:radio_together/services/create/get_radio_item.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:radio_together/widgets/create/radio_item_widget.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
 
@@ -22,7 +21,9 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
   @override
   void initState() {
     super.initState();
-    radioItems = ref.read(getRadioItemsServiceProvider).getRadioItems(widget.myPosition)
+    radioItems = ref
+        .read(getRadioItemsServiceProvider)
+        .getRadioItems(widget.myPosition);
   }
 
   @override
@@ -30,6 +31,9 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white, // 뒤로가기 버튼 색상을 흰색으로 변경
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
@@ -47,54 +51,54 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: FutureBuilder(
-                  future: radioItems,
-                  builder: (context, snapshot) => ListView(
+              // 2. 불필요한 흰색 배경 Container 제거
+              child: FutureBuilder<List<RadioItemModel>>(
+                future: radioItems,
+                builder: (context, snapshot) {
+                  // 3. 로딩 상태 처리
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  }
+                  // 4. 에러 상태 처리
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        'Error: ${snapshot.error}',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    );
+                  }
+                  // 5. 데이터가 없거나 비어있는 경우 처리
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        '주변 라디오 채널이 없습니다.',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    );
+                  }
+
+                  // 6. 성공적으로 데이터를 가져왔을 때 ListView.builder를 올바르게 사용
+                  final items = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: items.length, // 리스트의 전체 개수 지정
                     padding: const EdgeInsets.only(top: 16, bottom: 16),
-                    children: const [
-                      RadioListItem(
-                        title: 'Chill Vibes Radio',
-                        subtitle: 'Lo-Fi / Chill',
-                        listeners: '1,234 청취자',
-                        iconColor: Color(0xFFC084FC),
-                        playButtonColor: Color(0xFF7C3AED),
-                        isLive: true,
-                      ),
-                      RadioListItem(
-                        title: 'K-Pop Hits',
-                        subtitle: 'K-Pop',
-                        listeners: '3,456 청취자',
-                        iconColor: Color(0xFFF472B6),
-                        playButtonColor: Color(0xFF7C3AED),
-                        isLive: true,
-                      ),
-                      RadioListItem(
-                        title: 'Jazz Cafe',
-                        subtitle: 'Jazz',
-                        listeners: '891 청취자',
-                        iconColor: Color(0xFFFB923C),
-                        playButtonColor: Color(0xFF7C3AED),
-                      ),
-                      RadioListItem(
-                        title: 'Electronic Beats',
-                        subtitle: 'EDM',
-                        listeners: '2,134 청취자',
-                        iconColor: Color(0xFF60A5FA),
-                        playButtonColor: Color(0xFF7C3AED),
-                        isLive: true,
-                      ),
-                      RadioListItem(
-                        title: 'Midnight Drive',
-                        subtitle: 'Synthwave',
-                        listeners: '5,678 청취자',
-                        iconColor: Color(0xFF818CF8),
-                        playButtonColor: Color(0xFF7C3AED),
-                      ),
-                    ],
-                  ),
-                ),
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return RadioListItem(
+                        title: item.serviceNm,
+                        subtitle: item.broadNm,
+                        listeners: item.brodFreq,
+                        iconColor:
+                            Colors.primaries[index % Colors.primaries.length],
+                        // 아이템마다 다른 색상 적용
+                        playButtonColor: const Color(0xFF7C3AED),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ),
