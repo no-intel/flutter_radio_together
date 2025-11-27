@@ -5,6 +5,7 @@ import 'package:radio_together/model/my_position.dart';
 import 'package:radio_together/model/radio_item_model.dart';
 import 'package:radio_together/widgets/create/radio_item_widget.dart';
 import 'package:radio_together/widgets/home/background_widget.dart';
+import 'package:radio_together/widgets/stream/steam_screen.dart';
 
 class CreateRoomScreen extends ConsumerStatefulWidget {
   final MyPosition myPosition;
@@ -87,14 +88,42 @@ class _CreateRoomScreenState extends ConsumerState<CreateRoomScreen> {
                     padding: const EdgeInsets.only(top: 16, bottom: 16),
                     itemBuilder: (context, index) {
                       final item = items[index];
-                      return RadioListItem(
-                        title: item.serviceNm,
-                        subtitle: item.broadNm,
-                        listeners: item.brodFreq,
-                        iconColor:
-                            Colors.primaries[index % Colors.primaries.length],
-                        // 아이템마다 다른 색상 적용
-                        playButtonColor: const Color(0xFF7C3AED),
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    StreamScreen(),
+                            transitionsBuilder:
+                                (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child,
+                                ) {
+                                  const begin = Offset(0.0, 1.0);
+                                  const end = Offset.zero;
+                                  final tween = Tween(begin: begin, end: end);
+                                  final offsetAnimation = animation.drive(
+                                    tween,
+                                  );
+                                  return SlideTransition(
+                                    position: offsetAnimation,
+                                    child: child,
+                                  );
+                                },
+                          ),
+                        ),
+                        child: RadioListItem(
+                          title: item.serviceNm,
+                          subtitle: item.broadNm,
+                          listeners: item.brodFreq,
+                          iconColor:
+                              Colors.primaries[index % Colors.primaries.length],
+                          // 아이템마다 다른 색상 적용
+                          playButtonColor: const Color(0xFF7C3AED),
+                        ),
                       );
                     },
                   );
