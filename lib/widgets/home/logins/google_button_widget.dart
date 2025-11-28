@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/widgets/home/logins/social_login.dart';
 
-class GoogleButtonWidget extends StatelessWidget {
+class GoogleButtonWidget extends StatelessWidget with SocialLogin {
   final VoidCallback onPressed;
 
   const GoogleButtonWidget({required this.onPressed});
+
+  @override
+  void login() {}
 
   @override
   Widget build(BuildContext context) {

@@ -1,0 +1,3 @@
+mixin SocialLogin {
+  void login();
+}

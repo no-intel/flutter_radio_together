@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:radio_together/widgets/home/logins/social_login.dart';
 
-class AppleButtonWidget extends StatelessWidget {
+class AppleButtonWidget extends StatelessWidget with SocialLogin {
   final VoidCallback onPressed;
 
   const AppleButtonWidget({super.key, required this.onPressed});
+
+  @override
+  void login() {
+    // TODO: implement login
+  }
 
   @override
   Widget build(BuildContext context) {
