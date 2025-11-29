@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:radio_together/widgets/home/logins/social_login.dart';
 
-class GoogleButtonWidget extends StatelessWidget with SocialLogin {
+class GoogleButtonWidget extends ConsumerStatefulWidget {
   final VoidCallback onPressed;
 
-  const GoogleButtonWidget({required this.onPressed});
+  const GoogleButtonWidget({super.key, required this.onPressed});
+
+  @override
+  ConsumerState<GoogleButtonWidget> createState() => _GoogleButtonWidgetState();
+}
+
+class _GoogleButtonWidgetState extends ConsumerState<GoogleButtonWidget>
+    with SocialLogin {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void login() {}
@@ -15,7 +27,7 @@ class GoogleButtonWidget extends StatelessWidget with SocialLogin {
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Color(0xFF1F2937), // gray-900
