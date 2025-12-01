@@ -28,6 +28,11 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        // flutter_appauth를 위해 리디렉션 scheme 값을 추가합니다.
+        manifestPlaceholders += mapOf(
+            "appAuthRedirectScheme" to "com.example.radio_together"
+        )
     }
 
     buildTypes {
