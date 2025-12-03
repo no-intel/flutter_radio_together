@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart' as http;
+import 'package:radio_together/services/storage/SecureStorageService.dart';
 
 class GoogleLoginService {
   final String clientId;
@@ -10,6 +11,7 @@ class GoogleLoginService {
   final String redirectUrl;
   final String backendTokenEndpoint;
   final FlutterAppAuth appauth;
+  final SecureStorageService secureStorage;
 
   GoogleLoginService({
     required this.clientId,
@@ -18,6 +20,7 @@ class GoogleLoginService {
     required this.redirectUrl,
     required this.backendTokenEndpoint,
     required this.appauth,
+    required this.secureStorage,
   });
 
   Future<void> getCode() async {
@@ -46,29 +49,35 @@ class GoogleLoginService {
       }
 
       final String? authorizationCode = result.authorizationCode;
-      // 일부 환경에서는 codeVerifier를 result.codeVerifier에서 얻을 수 있음.
-      // flutter_appauth의 authorize()는 내부 PKCE를 관리하므로 codeVerifier가 null일 수 있음.
       final String? codeVerifier = result.codeVerifier;
 
-      // 서버로 전송: code와 redirect_uri(및 가능하면 code_verifier)를 보낸다.
       final response = await http.post(
         Uri.parse(backendTokenEndpoint),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'code': authorizationCode,
-          'redirect_uri': redirectUrl,
+          'authCode': authorizationCode,
+          'redirectUri': redirectUrl,
           // code_verifier가 있다면 같이 보내기 (서버가 교환 방식에 따라 필요할 수 있음)
-          if (codeVerifier != null) 'code_verifier': codeVerifier,
+          if (codeVerifier != null) 'codeVerifier': codeVerifier,
         }),
       );
+      print("### backend response status = ${response.statusCode}");
+      print("### backend response body   = ${response.body}");
 
       if (response.statusCode == 200) {
         // 서버가 자체 JWT나 세션 정보를 응답으로 준다면 여기서 처리
         final body = jsonDecode(response.body);
         // 예: body['access_token'] (server JWT), body['expires_in'] 등
+        _saveTokens(body['accessToken'], body['refreshToken']);
       } else {}
     } catch (e, st) {
+      print("### ERROR in getCode: $e");
       print(st);
     }
+  }
+
+  void _saveTokens(String accessToken, String refreshToken) {
+    secureStorage.saveAccessToken(accessToken);
+    secureStorage.saveRefreshToken(refreshToken);
   }
 }
