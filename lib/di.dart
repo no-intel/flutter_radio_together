@@ -23,7 +23,7 @@ final getRadioItemsServiceProvider = Provider<GetRadioItemsService>((ref) {
 });
 
 final getGoogleLoginServiceProvider = Provider<GoogleLoginService>((ref) {
-  // .env 파일에 있는 정확한 키 이름을 사용하도록 수정합니다.
+  // ✨ 해결책: 웹 클라이언트 ID 대신, 원래의 안드로이드용 클라이언트 ID를 사용합니다.
   final clientId = _getEnv('GOOGLE_CLIENT_ID');
   final authorizationEndpoint = _getEnv('ANDROID_GOOGLE_AUTHORIZATION_ENDPOINT');
   final tokenEndpoint = _getEnv('TOKEN_ENDPOINT');
